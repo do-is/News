@@ -153,7 +153,6 @@ public class BrowerNews extends AppCompatActivity {
                     item.setIcon(R.drawable.ic_star_yellow_48px);
                     isfavorite = true;
                 }
-//                System.out.println(isfavorite);
 
                 break;
             default:
@@ -161,19 +160,6 @@ public class BrowerNews extends AppCompatActivity {
         }
         return true;
     }
-
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        System.out.println("记动了menu");
-//        if(isfavorite){
-//            menu.findItem(R.id.contentfavorite).setIcon(R.drawable.ic_star_white_48px);
-//            isfavorite = false;
-//        } else{
-//            menu.findItem(R.id.contentfavorite).setIcon(R.drawable.ic_star_border_white_48px);
-//            isfavorite = true;
-//        }
-//        return super.onPrepareOptionsMenu(menu);
-//    }
 
     public static void startNewDetail(Context context, News.question question) {
         Intent intent = new Intent(context, BrowerNews.class);
