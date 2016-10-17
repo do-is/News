@@ -3,7 +3,7 @@ package com.example.guerdun.news.enity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class News {
+public class News implements Serializable {
 
     private String date;
     private ArrayList<question> stories;

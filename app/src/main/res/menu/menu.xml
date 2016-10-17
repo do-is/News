@@ -5,7 +5,18 @@
     <!--<item android:id="@+id/item1"-->
         <!--android:title="切换主题"-->
         <!--app:showAsAction="never"/>-->
-    <item android:id="@+id/about"
-        android:title="关于"
+    <item android:id="@+id/myfavorite"
+        android:title="@string/Myfavorite"
         app:showAsAction="never"/>
+    <item android:id="@+id/clear"
+        android:title="@string/clearcache"
+        app:showAsAction="never"/>
+    <item android:id="@+id/about"
+        android:title="@string/about"
+        app:showAsAction="never"/>
+
+    <!--<item android:id="@+id/download"-->
+        <!--android:title="@string/download"-->
+        <!--app:showAsAction="never"/>-->
+
 </menu>

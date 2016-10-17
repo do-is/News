@@ -14,11 +14,19 @@ public class Detail {
     private String image;
     private String share_url;
     private ArrayList<String> js;
-    private int ga_prefix;
+    private String ga_prefix;
     private ArrayList<String> images;
-    private String type;
+    private int type;
     private int id;
     private ArrayList<String> css;
+
+    public String getGa_prefix() {
+        return ga_prefix;
+    }
+
+    public void setGa_prefix(String ga_prefix) {
+        this.ga_prefix = ga_prefix;
+    }
 
     public String getBody() {
         return body;
@@ -44,11 +52,11 @@ public class Detail {
         this.id = id;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -60,13 +68,6 @@ public class Detail {
         this.images = images;
     }
 
-    public int getGa_prefix() {
-        return ga_prefix;
-    }
-
-    public void setGa_prefix(int ga_prefix) {
-        this.ga_prefix = ga_prefix;
-    }
 
     public ArrayList<String> getJs() {
         return js;

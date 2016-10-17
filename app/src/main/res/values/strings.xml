@@ -2,4 +2,9 @@
     <string name="app_name">News</string>
     <string name="titile">22222222222222</string>
     <string name="share">分享</string>
+    <string name="about">关于</string>
+    <string name="clearcache">清楚缓存</string>
+    <string name="download">离线所有内容</string>
+    <string name="Myfavorite">我的收藏</string>
+    <string name="favorite">收藏</string>
 </resources>

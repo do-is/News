@@ -1,10 +1,8 @@
 package com.example.guerdun.news.activity;
 
-import android.content.ContentValues;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,31 +15,29 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.guerdun.news.Db.NewsListDb;
 import com.example.guerdun.news.R;
 import com.example.guerdun.news.about.AboutDeveloper;
-import com.example.guerdun.news.util.IsNetWork;
-import com.google.gson.Gson;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import com.example.guerdun.news.adapter.Myadapter;
 import com.example.guerdun.news.enity.News;
+import com.example.guerdun.news.util.FormatData;
+import com.example.guerdun.news.util.IsNetWork;
 import com.example.guerdun.news.util.Itemonclicklistener;
+import com.example.guerdun.news.util.SnackBar;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private Myadapter myadapter;
     private SwipeRefreshLayout refreshLayout;
-//    private DbHelp dbHelp;
-//    private SQLiteDatabase db;
     private List<News.question> list = new ArrayList<News.question>();
 
-    private static final String uri = "http://news-at.zhihu.com/api/4/news/";
+    private static final String uri = "http://news-at.zhihu.com/api/4/news/latest";
     private static final String beforeurl = "http://news.at.zhihu.com/api/4/news/before/";
     private int mYEAR = Calendar.getInstance().get(Calendar.YEAR);
     private int mMONTH = Calendar.getInstance().get(Calendar.MONTH);
@@ -54,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initview();
-        loadjsondata(uri + "latest");
+        loadjsondata(uri);
+
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -62,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
                 refreshload();
             }
         });
+    }
+
+    private void initview() {
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        refreshLayout.setDistanceToTriggerSync(300);
+        refreshLayout.setColorSchemeResources(android.R.color.holo_green_light,
+                android.R.color.holo_blue_bright, android.R.color.holo_red_light,
+                android.R.color.holo_orange_dark);
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             boolean isSlidingtoLast = false;
 
@@ -75,18 +84,10 @@ public class MainActivity extends AppCompatActivity {
                     int count = manager.getItemCount();
 
                     if (last == (count - 1) && isSlidingtoLast) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(mYEAR, mMONTH, mDAY--);
-                        Date date = new Date(c.getTimeInMillis());
-                        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+                        loadjsondata(beforeurl + FormatData.format(mYEAR, mMONTH, mDAY--));
 
-                        System.out.println(formatter.format(date));
-
-                        loadjsondata(beforeurl + formatter.format(date));
                     }
                 }
-
-
                 super.onScrollStateChanged(recyclerView, newState);
             }
 
@@ -98,85 +99,61 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initview() {
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        dbHelp = new DbHelp(this, "Thisismydb", null, 1);
-//        db = dbHelp.getWritableDatabase();
-
-        refreshLayout.setDistanceToTriggerSync(300);
-        refreshLayout.setColorSchemeResources(android.R.color.holo_green_light,
-                android.R.color.holo_blue_bright, android.R.color.holo_red_light,
-                android.R.color.holo_orange_dark);
-
-    }
-
     public void loadjsondata(String parseurl) {
         if (IsNetWork.connect(this)) {
             StringRequest request = new StringRequest(parseurl, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    System.out.println(response);
                     getGson(response);
-
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Snackbar.make(recyclerView, "网络错误", Snackbar.LENGTH_LONG).show();
+                    SnackBar.showError(recyclerView, "请求出错");
                 }
             });
 
             Volley.newRequestQueue(this).add(request);
 
         } else {
-//            Gson gsson = new Gson();
-//            Cursor cursor = db.query("Zhihu", null, null, null, null, null, null);
-//            if (cursor.moveToFirst()) {
-//                do {
-//                    News.question question = gsson.fromJson(cursor.getString(cursor.getColumnIndex("zhihu_news")), News.question.class);
-//                    list.add(question);
-//                } while (cursor.moveToNext());
-//            }
-//
-//            cursor.close();
-            showresults();
-            Snackbar.make(recyclerView, "网络出错，请检查网络", Snackbar.LENGTH_LONG)
-                    .setAction("设置", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(Settings.ACTION_SETTINGS));
-                        }
-                    }).show();
+            new AsyncTask<Void, Void, List<News.question>>() {
+
+                @Override
+                protected List<News.question> doInBackground(Void... params) {
+                    list = NewsListDb.getInstance(getApplicationContext()).loadNewsList();
+                    return list;
+                }
+
+                @Override
+                protected void onPostExecute(List<News.question> questions) {
+                    showresults();
+                    super.onPostExecute(questions);
+                }
+            }.execute();
+
+            SnackBar.showErrorSet(this, recyclerView, "网络出错，请检查网络", "设置");
         }
 
     }
 
-    private void getGson(String response) {
+    public void getGson(String response) {
         Gson gson = new Gson();
         News news = gson.fromJson(response, News.class);
 
-        for (News.question question : news.getStories()) {
+        for (final News.question question : news.getStories()) {
             list.add(question);
 
-//            if (!dbishere(question.getId())) {
-//
-//                db.beginTransaction();
-//                values.put("zhihu_id", question.getId());
-//                values.put("zhihu_news", gson.toJson(question));
-//                values.put("zhihu_time", news.getDate());
-//                System.out.println(news.getDate());
-//                values.put("zhihu_content", "");
-//                db.insert("Zhihu", null, values);
-//                values.clear();
-//                db.setTransactionSuccessful();
-//                db.endTransaction();
-//
-//
-//            }
 
-//            Cachecontent(question.getId());
+            new AsyncTask<Void, Void, Void>() {
+
+                @Override
+                protected Void doInBackground(Void... params) {
+                    if (!NewsListDb.getInstance(getApplicationContext()).isExist(question)) {
+                        NewsListDb.getInstance(getApplicationContext()).saveNewsList(question);
+                    }
+                    return null;
+                }
+            }.execute();
 
         }
 
@@ -191,7 +168,11 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void OnItemClick(View v, int position) {
                     News.question news = list.get(position);
-                    BrowerNews.startNewDetail(MainActivity.this, news);
+                    BrowerNews.startNewDetail(MainActivity.this,news);
+
+//                    Intent intent = new Intent(MainActivity.this, BrowerNews.class);
+//                    intent.putExtra("id", news.getId());
+//                    startActivity(intent);
                 }
             });
             recyclerView.setAdapter(myadapter);
@@ -204,14 +185,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void refreshload() {
 
-        list.clear();
-        loadjsondata(uri + "latest");
+        if (IsNetWork.connect(this)) {
+            list.clear();
+            loadjsondata(uri);
+        } else {
+            SnackBar.showErrorSet(this, recyclerView, "网络出错，请检查网络", "设置");
+            refreshstop();
+        }
+
 
     }
 
-
     private void refreshstop() {
-
         refreshLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -219,20 +204,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-//    private boolean dbishere(int id) {
-//        Cursor cursor = db.query("Zhihu", null, null, null, null, null, null);
-//        if (cursor.moveToFirst()) {
-//            do {
-//                if (id == cursor.getInt(cursor.getColumnIndex("zhihu_id"))) {
-//                    return true;
-//                }
-//            } while (cursor.moveToNext());
-//        }
-//
-//        cursor.close();
-//        return false;
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -249,7 +220,19 @@ public class MainActivity extends AppCompatActivity {
             case R.id.about:
                 AboutDeveloper.show(this);
                 break;
+            case R.id.clear:
+                NewsListDb.getInstance(this).DeleteCache();
+                break;
+            case R.id.myfavorite:
+                startActivity(new Intent(MainActivity.this, Favorite.class));
+                break;
+//            case R.id.download:
+//                refreshload();
+//                getDetailGson();
+//                break;
         }
         return true;
     }
+
+
 }

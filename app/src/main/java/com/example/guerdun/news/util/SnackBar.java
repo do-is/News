@@ -12,12 +12,12 @@ import android.view.View;
  */
 
 public class SnackBar {
-    public static void show(RecyclerView recyclerView, String string) {
-        Snackbar.make(recyclerView, string, Snackbar.LENGTH_LONG).show();
+    public static void showError(View view, String string) {
+        Snackbar.make(view, string, Snackbar.LENGTH_LONG).show();
     }
 
-    public static void showSet(final Context context, RecyclerView recyclerView, String string, String stringtwo) {
-        Snackbar.make(recyclerView, string, Snackbar.LENGTH_LONG)
+    public static void showErrorSet(final Context context, View view, String string, String stringtwo) {
+        Snackbar.make(view, string, Snackbar.LENGTH_LONG)
                 .setAction(stringtwo, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
