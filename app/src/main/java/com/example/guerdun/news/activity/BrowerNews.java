@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -21,11 +20,10 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.guerdun.news.Db.FavortieDb;
 import com.example.guerdun.news.R;
+import com.example.guerdun.news.enity.Detail;
 import com.example.guerdun.news.enity.News;
 import com.example.guerdun.news.util.SnackBar;
 import com.google.gson.Gson;
-
-import com.example.guerdun.news.enity.Detail;
 
 public class BrowerNews extends AppCompatActivity {
 
@@ -59,7 +57,7 @@ public class BrowerNews extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                SnackBar.showError(webView,"没有网络");
+                SnackBar.showError(webView, "没有网络");
             }
         });
         Volley.newRequestQueue(this).add(request);
@@ -73,6 +71,7 @@ public class BrowerNews extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         toolbarlayout = (CollapsingToolbarLayout) findViewById(R.id.coll_tool_bar);
 
+        toolbarlayout.setTitle("  ");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(false);
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -93,7 +92,6 @@ public class BrowerNews extends AppCompatActivity {
                 .into(imageView);
         title.setText(detail.getTitle());
         ImageSource.setText(detail.getImage_source());
-        toolbarlayout.setTitle(detail.getTitle());
 
         String html = gethtml(detail.getBody());
         webView.loadDataWithBaseURL("", html, "text/html", "utf-8", null);
@@ -125,8 +123,8 @@ public class BrowerNews extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.detail_menu, menu);
-        if (isfavorite){
-            menu.findItem(R.id.contentfavorite).setIcon(R.drawable.ic_star_white_48px);
+        if (isfavorite) {
+            menu.findItem(R.id.contentfavorite).setIcon(R.drawable.ic_star_yellow_48px);
         }
         return true;
     }
@@ -139,19 +137,20 @@ public class BrowerNews extends AppCompatActivity {
                 break;
             case R.id.share:
                 Intent sendmg = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
-                String message = detail.getTitle()+" " + detail.getShare_url() + "\t\t\t" + "来自News应用";
+                String message = detail.getTitle() + " " + detail.getShare_url() + "\t\t\t" + "来自" + getTitle() + "应用";
                 sendmg.putExtra(Intent.EXTRA_TEXT, message);
                 startActivity(Intent.createChooser(sendmg, "分享到"));
                 break;
             case R.id.contentfavorite:
 
-                if (isfavorite){
+                if (isfavorite) {
                     FavortieDb.getInstance(this).deleteFavorite(news);
-                    item.setIcon(R.drawable.ic_star_border_white_48px);
+                    item.setIcon(R.drawable.ic_star_white_48px);
                     isfavorite = false;
                 } else {
                     FavortieDb.getInstance(this).savedata(news);
-                    item.setIcon(R.drawable.ic_star_white_48px);
+                    SnackBar.showShorTime(webView,"已加收藏");
+                    item.setIcon(R.drawable.ic_star_yellow_48px);
                     isfavorite = true;
                 }
 //                System.out.println(isfavorite);
@@ -176,7 +175,7 @@ public class BrowerNews extends AppCompatActivity {
 //        return super.onPrepareOptionsMenu(menu);
 //    }
 
-    public static void startNewDetail(Context context, News.question question){
+    public static void startNewDetail(Context context, News.question question) {
         Intent intent = new Intent(context, BrowerNews.class);
         intent.putExtra("News", question);
         context.startActivity(intent);
