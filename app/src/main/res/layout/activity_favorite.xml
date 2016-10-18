@@ -4,7 +4,7 @@
     android:id="@+id/activity_favorite"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.guerdun.news.activity.Favorite">
+    tools:context="com.miki33.ayk.news.com.miki33.guerdun.report.activity.Favorite">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/myfavorite_recyclerview"

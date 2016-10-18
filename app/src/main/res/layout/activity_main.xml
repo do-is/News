@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.guerdun.news.activity.MainActivity">
+    tools:context="com.miki33.ayk.news.com.miki33.guerdun.report.activity.MainActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
