@@ -16,11 +16,9 @@ import java.util.List;
 
 public class FavortieDb {
 
-    private static FavortieDb favortieDb;
-
     private static final String DBNAME = "Favorite";
     private static final int VERSION = 1;
-
+    private static FavortieDb favortieDb;
     private DbHelp dbHelp;
     private SQLiteDatabase db;
 
@@ -38,7 +36,7 @@ public class FavortieDb {
 
     public void savedata(News.question news) {
 
-        if (news != null){
+        if (news != null) {
 
             ContentValues values = new ContentValues();
             values.put("id", news.getId());

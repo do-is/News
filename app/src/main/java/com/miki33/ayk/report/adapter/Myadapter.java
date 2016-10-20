@@ -21,12 +21,11 @@ import java.util.List;
 public class Myadapter extends RecyclerView.Adapter<Myadapter.MyViewHolder> {
 
 
+    private static final int NewsList = 0;
+    private static final int NewsList_Date = 1;
     private Context context;
     private List<News.question> newses;
     private Itemonclicklistener mlistener;
-
-    private static final int NewsList = 0;
-    private static final int NewsList_Date = 1;
 
     public Myadapter(Context context, List<News.question> newses) {
         this.context = context;
@@ -52,7 +51,7 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.MyViewHolder> {
         } else {
             View view = LayoutInflater.from(context).
                     inflate(R.layout.card_view_date, parent, false);
-            return new DateViewHolder(view,mlistener);
+            return new DateViewHolder(view, mlistener);
         }
     }
 
@@ -60,19 +59,19 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.MyViewHolder> {
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         News.question news = newses.get(position);
 
-        if (holder instanceof DateViewHolder){
+        if (holder instanceof DateViewHolder) {
             String date = FormatData.date(news.getDate());
             ((DateViewHolder) holder).date_text.setText(date);
-            BindHolder(holder,position,news);
+            BindHolder(holder, position, news);
         }
-        BindHolder(holder,position,news);
+        BindHolder(holder, position, news);
     }
 
     private void BindHolder(MyViewHolder holder, int position, News.question news) {
         holder.Title.setText(news.getTitle());
 
         String url = news.getImages().get(0);
-        if (url != null){
+        if (url != null) {
             Glide.with(context)
                     .load(url)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
@@ -93,8 +92,8 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.MyViewHolder> {
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView Title;
         final ImageView images;
+        private TextView Title;
         private Itemonclicklistener listener;
         private CardView cardview;
 

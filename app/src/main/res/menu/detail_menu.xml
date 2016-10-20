@@ -2,13 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/contentfavorite"
+    <item
+        android:id="@+id/contentfavorite"
+        android:icon="@drawable/ic_star_white_48px"
         android:title="@string/favorite"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_star_white_48px"/>
-    <item android:id="@+id/share"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share_white_48px"
         android:title="@string/share"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_share_white_48px"/>
+        app:showAsAction="always" />
 
 </menu>

@@ -24,13 +24,14 @@ public class News implements Serializable {
         this.stories = stories;
     }
 
-    public class question implements Serializable{
+    public class question implements Serializable {
 
         private ArrayList<String> images;
         private int type;
         private int id;
         private String ga_prefix;
         private String title;
+        private String date;
 
         public ArrayList<String> getImages() {
             return images;
@@ -71,8 +72,6 @@ public class News implements Serializable {
         public void setId(int id) {
             this.id = id;
         }
-
-        private String date;
 
         public String getDate() {
             return date;

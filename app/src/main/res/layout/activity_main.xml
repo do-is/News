@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recycler_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundCustom"
     android:orientation="vertical"
-    tools:context="com.miki33.ayk.news.com.miki33.guerdun.report.activity.MainActivity">
+    tools:context="com.miki33.ayk.report.activity.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/re_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/Theme.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"

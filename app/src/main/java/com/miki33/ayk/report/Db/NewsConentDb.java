@@ -15,9 +15,9 @@ public class NewsConentDb {
 
     private static final String DBNAME = "NewsContent";
     private static final int VERSION = 1;
+    private static NewsConentDb newsConentDb;
     private DbHelp dbHelp;
     private SQLiteDatabase db;
-    private static NewsConentDb newsConentDb;
 
     public NewsConentDb(Context context) {
         dbHelp = new DbHelp(context, DBNAME, null, VERSION);
@@ -34,7 +34,7 @@ public class NewsConentDb {
     public void saveNewsContent(Detail newsdetail, int newsid) {
         if (newsdetail != null) {
             ContentValues values = new ContentValues();
-            values.put("id",newsid);
+            values.put("id", newsid);
             values.put("title", newsdetail.getTitle());
             values.put("iamge_source", newsdetail.getImage_source());
             values.put("image", newsdetail.getImage());

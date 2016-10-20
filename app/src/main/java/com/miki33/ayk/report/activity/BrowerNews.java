@@ -2,12 +2,16 @@ package com.miki33.ayk.report.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -18,17 +22,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.miki33.ayk.report.Db.FavortieDb;
 import com.miki33.ayk.report.R;
 import com.miki33.ayk.report.enity.Detail;
 import com.miki33.ayk.report.enity.News;
+import com.miki33.ayk.report.util.PreUtil;
 import com.miki33.ayk.report.util.SnackBar;
-import com.google.gson.Gson;
 
 public class BrowerNews extends AppCompatActivity {
 
     private News.question news;
 
+    private PreUtil preUtil;
     private WebView webView;
     private ImageView imageView;
     private TextView title;
@@ -40,8 +46,29 @@ public class BrowerNews extends AppCompatActivity {
     private String url = "http://news-at.zhihu.com/api/4/news/";
     private boolean isfavorite = false;
 
+    public static void startNewDetail(Context context, News.question question) {
+        Intent intent = new Intent(context, BrowerNews.class);
+        intent.putExtra("News", question);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        initdata();
+        inittheme();
+//        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            layoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
+
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brower_news);
 
@@ -61,6 +88,18 @@ public class BrowerNews extends AppCompatActivity {
             }
         });
         Volley.newRequestQueue(this).add(request);
+    }
+
+    private void inittheme() {
+        if (preUtil.isDay()) {
+            setTheme(R.style.DayTheme);
+        } else {
+            setTheme(R.style.NightTheme);
+        }
+    }
+
+    private void initdata() {
+        preUtil = new PreUtil(this);
     }
 
     private void initview() {
@@ -103,9 +142,9 @@ public class BrowerNews extends AppCompatActivity {
 
         String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_daily.css\" type=\"text/css\">";
         String theme = "<body className=\"\" onload=\"onLoaded()\">";
-//        if (App.getThemeValue() == Theme.NIGHT_THEME){
-//            theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
-//        }
+        if (preUtil.isNight()) {
+            theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
+        }
         StringBuilder builder = new StringBuilder();
         builder.append("<!DOCTYPE html>\n")
                 .append("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n")
@@ -149,7 +188,7 @@ public class BrowerNews extends AppCompatActivity {
                     isfavorite = false;
                 } else {
                     FavortieDb.getInstance(this).savedata(news);
-                    SnackBar.showShorTime(webView,"已加收藏");
+                    SnackBar.showShorTime(webView, "已加收藏");
                     item.setIcon(R.drawable.ic_star_yellow_48px);
                     isfavorite = true;
                 }
@@ -159,11 +198,5 @@ public class BrowerNews extends AppCompatActivity {
                 break;
         }
         return true;
-    }
-
-    public static void startNewDetail(Context context, News.question question) {
-        Intent intent = new Intent(context, BrowerNews.class);
-        intent.putExtra("News", question);
-        context.startActivity(intent);
     }
 }

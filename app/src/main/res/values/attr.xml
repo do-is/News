@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="backgroundCustom" format="color" />
+    <attr name="cardviewCustom" format="color" />
+    <attr name="TextColorCustom" format="color" />
+</resources>

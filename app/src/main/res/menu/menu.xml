@@ -2,21 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--<item android:id="@+id/item1"-->
-        <!--android:title="切换主题"-->
-        <!--app:showAsAction="never"/>-->
-    <item android:id="@+id/myfavorite"
+    <item
+        android:id="@+id/change"
+        android:title="切换主题"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/myfavorite"
         android:title="@string/Myfavorite"
-        app:showAsAction="never"/>
-    <item android:id="@+id/clear"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/clear"
         android:title="@string/clearcache"
-        app:showAsAction="never"/>
-    <item android:id="@+id/about"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/about"
         android:title="@string/about"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
     <!--<item android:id="@+id/download"-->
-        <!--android:title="@string/download"-->
-        <!--app:showAsAction="never"/>-->
+    <!--android:title="@string/download"-->
+    <!--app:showAsAction="never"/>-->
 
 </menu>

@@ -5,15 +5,15 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_marginTop="5dp"
         android:id="@+id/date_text"
         android:layout_width="match_parent"
-        android:layout_marginRight="8dp"
         android:layout_height="30dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
         android:gravity="right|center"
-        android:textColor="#6f6f6f"
-        android:text="哈哈哈"/>
+        android:text="哈哈哈"
+        android:textColor="#6f6f6f" />
 
-    <include layout="@layout/card_view"/>
+    <include layout="@layout/card_view" />
 
 </LinearLayout>

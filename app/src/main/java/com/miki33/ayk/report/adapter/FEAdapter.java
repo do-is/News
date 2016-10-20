@@ -27,7 +27,7 @@ public class FEAdapter extends RecyclerView.Adapter<FEAdapter.MyViewHolder> {
     private List<News.question> list;
     private Itemonclicklistener listener;
 
-    public FEAdapter(Context context,int resourceid) {
+    public FEAdapter(Context context, int resourceid) {
         this.context = context;
         this.resourceid = resourceid;
         this.inflater = LayoutInflater.from(context);
@@ -43,8 +43,8 @@ public class FEAdapter extends RecyclerView.Adapter<FEAdapter.MyViewHolder> {
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(resourceid,parent,false);
-        return new MyViewHolder(view,listener);
+        View view = inflater.inflate(resourceid, parent, false);
+        return new MyViewHolder(view, listener);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class FEAdapter extends RecyclerView.Adapter<FEAdapter.MyViewHolder> {
         return list.size();
     }
 
-    public void OnClickListneenr(Itemonclicklistener listener){
+    public void OnClickListneenr(Itemonclicklistener listener) {
         this.listener = listener;
     }
 
@@ -83,7 +83,7 @@ public class FEAdapter extends RecyclerView.Adapter<FEAdapter.MyViewHolder> {
 
         @Override
         public void onClick(View v) {
-            listener.OnItemClick(v,getLayoutPosition());
+            listener.OnItemClick(v, getLayoutPosition());
         }
     }
 }

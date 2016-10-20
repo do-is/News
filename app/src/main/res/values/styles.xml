@@ -7,6 +7,25 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <!--日间主题-->
+    <style name="DayTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundCustom">@android:color/white</item>
+        <item name="cardviewCustom">@color/cardView</item>
+        <item name="TextColorCustom">@android:color/black</item>
+    </style>
+
+    <!--夜间主题-->
+    <style name="NightTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimaryNight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>
+        <item name="colorAccent">@color/color868686</item>
+        <item name="backgroundCustom">@color/backgroundnight</item>
+        <item name="cardviewCustom">@color/cardViewNight</item>
+        <item name="TextColorCustom">@color/textColorNight</item>
+    </style>
 
 
     <style name="AppTheme.NoActionBar">

@@ -3,4 +3,13 @@
     <color name="colorPrimary">#607d8b</color>
     <color name="colorPrimaryDark">#455a64</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="cardView">#ffffff</color>
+
+    <color name="colorPrimaryNight">#202020</color>
+    <color name="colorPrimaryDarkNight">#000000</color>
+    <color name="backgroundnight">#343434</color>
+    <color name="cardViewNight">#454545</color>
+    <color name="textColorNight">#b8b8b8</color>
+    <color name="color868686">#868686</color>
+
 </resources>

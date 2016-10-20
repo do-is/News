@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.miki33.ayk.report.enity.News;
-import com.miki33.ayk.report.util.Logutil;
 
 import java.util.ArrayList;
 import java.util.List;

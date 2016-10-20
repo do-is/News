@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class Logutil {
 
-    public static final void i (String msg){
-        Log.i("TAG",msg);
+    public static final void i(String msg) {
+        Log.i("TAG", msg);
     }
 }

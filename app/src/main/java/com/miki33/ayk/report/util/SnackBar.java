@@ -11,8 +11,8 @@ import android.view.View;
  */
 
 public class SnackBar {
-    public static void showShorTime(View view,String string){
-        Snackbar.make(view,string,Snackbar.LENGTH_SHORT).show();
+    public static void showShorTime(View view, String string) {
+        Snackbar.make(view, string, Snackbar.LENGTH_SHORT).show();
     }
 
 

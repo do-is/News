@@ -30,10 +30,10 @@
 
                 <ImageView
                     android:id="@+id/detail_image"
-                    android:fitsSystemWindows="true"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@null"
+                    android:fitsSystemWindows="true"
                     android:scaleType="centerCrop" />
 
                 <View
@@ -65,8 +65,8 @@
                 android:id="@+id/detail_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
                 android:minHeight="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             </android.support.v7.widget.Toolbar>
@@ -77,14 +77,14 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/backgroundCustom"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <WebView
             android:id="@+id/detail_webview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
         </WebView>
     </android.support.v4.widget.NestedScrollView>
