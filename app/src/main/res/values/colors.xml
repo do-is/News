@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#455a64</color>
     <color name="colorAccent">#FF4081</color>
     <color name="cardView">#ffffff</color>
+    <color name="backgroundCustom">#f5f5f5</color>
+
 
     <color name="colorPrimaryNight">#202020</color>
     <color name="colorPrimaryDarkNight">#000000</color>

@@ -12,7 +12,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="backgroundCustom">@android:color/white</item>
+        <item name="backgroundCustom">@color/backgroundCustom</item>
         <item name="cardviewCustom">@color/cardView</item>
         <item name="TextColorCustom">@android:color/black</item>
     </style>

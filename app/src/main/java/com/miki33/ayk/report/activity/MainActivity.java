@@ -247,6 +247,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        if (preUtil.isNight()){
+            menu.findItem(R.id.change).setTitle("日间模式");
+        }
         return true;
     }
 
@@ -255,6 +258,11 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.change:
                 changeThemeByZhiHu();
+                if (preUtil.isDay()){
+                    item.setTitle("夜间模式");
+                } else{
+                    item.setTitle("日间模式");
+                }
                 break;
             case R.id.about:
                 AboutDeveloper.show(this);
